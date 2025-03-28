@@ -11,4 +11,4 @@ Last-Updated: DATE_NOW
 
 Expires: DATE_EXP
 
-Generated at: https://github.com/alphagov/security.txt
+Generated at: https://github.com/CO-Cyber-Security/security.txt
