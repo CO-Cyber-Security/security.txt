@@ -1,6 +1,8 @@
 name: Keep workflows alive
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 8 2 * *"
 jobs:
   keep_alive_test:
     runs-on: ubuntu-latest
