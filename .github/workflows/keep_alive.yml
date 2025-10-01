@@ -1,0 +1,51 @@
+name: Keep workflows alive
+on:
+  workflow_dispatch:
+jobs:
+  keep_alive_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate a JWT token
+        id: generate-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.KEEP_ALIVE_APP_ID }}
+          private-key: ${{ secrets.KEEP_ALIVE_APP_KEY }}
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Enable workflows and gather statuses
+        id: check-workflows
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          WORKFLOWS: ${{ vars.WORKFLOWS_TO_KEEP_ALIVE }}
+          REPO: ${{ github.repository }}
+        run: |
+          IFS=',' read -ra WF_LIST <<< "$WORKFLOWS"
+          RESULT_JSON="["
+          for WF in "${WF_LIST[@]}"; do
+            if [ -z "$WF" ]; then
+              continue
+            fi
+            echo "Processing workflow: $WF"
+            # Enable the workflow
+            gh api --method PUT -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/${REPO}/actions/workflows/${WF}/enable" >/dev/null
+
+            # Get status for this workflow
+            JSON=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/${REPO}/actions/workflows/${WF}")
+            STATE=$(echo "$JSON" | jq -r '.state')
+            NAME=$(echo "$JSON" | jq -r '.name')
+            RESULT_JSON="${RESULT_JSON}{\"workflow\":\"${WF}\",\"name\":\"${NAME}\",\"state\":\"${STATE}\"},"
+          done
+          
+          # Close JSON array
+          RESULT_JSON="${RESULT_JSON%,}"
+          RESULT_JSON="${RESULT_JSON}]"
+          echo "results=$RESULT_JSON" >> "$GITHUB_OUTPUT"
+
+      - name: Show results
+        run: |
+          echo "Workflow statuses: ${{ steps.check-workflows.outputs.results }}"
