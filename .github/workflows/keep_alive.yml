@@ -52,6 +52,6 @@ jobs:
         run: |
           PAYLOAD=$(jq -n --argjson o "${{ steps.check-workflows.outputs.results }}" '{"outcome": $o}')
           echo $PAYLOAD
-          curl -X POST -H 'Content-Type: application/json' --data "$PAYLOAD" "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}" 
+          curl -X POST -H 'Content-Type: application/json' --data '$PAYLOAD' "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}" 
           
           
