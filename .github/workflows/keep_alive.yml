@@ -48,6 +48,10 @@ jobs:
           RESULT_JSON="${RESULT_JSON}]"
           echo "results=$RESULT_JSON" >> "$GITHUB_OUTPUT"
 
-      - name: Show results
+      - name: Send results to Slack
         run: |
-          echo "Workflow statuses: ${{ steps.check-workflows.outputs.results }}"
+          PAYLOAD=$(jq -n --argjson o "${{ steps.check-workflows.outputs.results }}" '{"outcome": $o}')
+          echo $PAYLOAD
+          curl -X OST -H 'Content-Type: application/json' --data "$PAYLOAD" "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}" 
+          
+          
