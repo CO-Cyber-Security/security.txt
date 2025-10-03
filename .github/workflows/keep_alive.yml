@@ -49,11 +49,21 @@ jobs:
           echo "results=$RESULT_JSON" >> "$GITHUB_OUTPUT"
 
       - name: Send results to Slack
+        shell: bash
         run: |
           PAYLOAD=$(jq -n --argjson o '${{ steps.check-workflows.outputs.results }}' '{"Outcome": $o}')
           echo $PAYLOAD
-          jq -e 'has("Outcome") and (.Outcome | type=="array")' <<<"$PAYLOAD" || { echo "Error: Outcome key is missing or not an array"} \
-            && jq -c '.Outcome[]' <<<"$PAYLOAD" | \
-            while read i; do curl -X POST -H 'Content-Type: application/json' --data "$i" "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}"; done
+          if jq -e 'has("Outcome") and (.Outcome | type=="array")' <<<"$PAYLOAD"; then 
+            jq -c '.Outcome[]' <<<"$PAYLOAD" |
+            while read i; do
+              curl -X POST \
+              -H 'Content-Type: application/json' \
+              --data "$i" \
+              "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}" 
+            done
+          else 
+            echo "Error: Outcome key is missing or not an array"
+            exit 1
+          fi
           
           
