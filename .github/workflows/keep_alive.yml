@@ -54,6 +54,6 @@ jobs:
           echo $PAYLOAD
           jq -e 'has("Outcome") and (.Outcome | type=="array")' <<<"$PAYLOAD" || { echo "Error: Outcome key is missing or not an array"} \
             && jq -c '.Outcome[]' <<<"$PAYLOAD" \
-            | while read i; do curl -X POST -H 'Content-Type: application/json' --data $i "${{ vars.SLACK_KEEPALIVE_WEBHOOK_URL }}"; done
+            | while read i; do curl -X POST -H 'Content-Type: application/json' --data $i "${{ secrets.SLACK_KEEPALIVE_WEBHOOK_URL }}"; done
           
           
