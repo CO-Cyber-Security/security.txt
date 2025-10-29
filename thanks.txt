@@ -1,6 +1,7 @@
 # We would like to thank the following:
 # [yyyy-mm-dd] Name -- description
 
+[2025-07-03] Jeewan Bhatta - Reported an SQL injection vulnerability in a GOV.UK service
 [2025-03-07] Jeewan Bhatta - Reported a HTML injection vulnerability in a GOV.UK service
 [2024-08-24] Spell1 - Reported a HTML injection vulnerability in a GOV.UK service
 [2024-10-31] Ariel Rachamim - Reported multiple subdomain takeover vulnerabilities on Cabinet Office sites
@@ -31,6 +32,7 @@
 [2022-01-17] Mohd.Danish Abid -- potential directory security misconfiguration on gdscareers.gov.uk
 [2021-07-21] Artem Smotrakov -- potential timing attack on GOV.UK Pay Webhook signature checks
 [2020-02-11] Jonathan Leitschuh -- potential MITM using HTTP to resolve some GOV.UK Pay Maven dependencies
+
 
 
 
