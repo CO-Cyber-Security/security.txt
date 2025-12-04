@@ -1,0 +1,38 @@
+name: Dependency Review (non-blocking)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Dependency review
+        id: dependency-review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          allow-licenses: ""
+          deny-licenses: ""
+          comment-summary-in-pr: true
+        continue-on-error: true
+
+      - name: Summarise result
+        if: always()
+        run: |
+          echo "## Dependency review" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.dependency-review.outcome }}" = "failure" ]; then
+            echo "- Dependencies with at least 'high' severity issues were found." >> "$GITHUB_STEP_SUMMARY"
+            echo "- The check is non-blocking for now, but these should be addressed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- No high severity dependency issues were detected." >> "$GITHUB_STEP_SUMMARY"
+          fi
