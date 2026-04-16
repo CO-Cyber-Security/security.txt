@@ -1,6 +1,7 @@
 # We would like to thank the following:
 # [yyyy-mm-dd] Name -- description
 
+[2026-04-16] Muhammet Berkant Gezer - Reported a password enumeration vulnerability in a GOV.UK service 
 [2026-03-11] Jeewan Bhatta - Reported a a publicly exposed resource in a GOV.UK service
 [2026-02-20] Mridul Vohra (Spell1) - Reported a HTML injection vulnerability in a GOV.UK service
 [2025-12-17] amenbreakpoint - Reported information disclosure in a GOV.UK service 
