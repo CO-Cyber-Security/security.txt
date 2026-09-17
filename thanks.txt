@@ -1,6 +1,10 @@
 # We would like to thank the following:
 # [yyyy-mm-dd] Name -- description
 
+[2026-09-10] danish-researcher - Reported multiple Vulnerabilities in GOV.UK services
+[2026-07-22] Prasanth Sundararajan - Reported a XSS vulnerability in a GOV.UK service
+[2026-06-20] Smaran Chand - Reported a vulnerability in a GOV.UK service
+[2026-05-14] Omri Inbar - Reported a Subdomain takeover vulnerability in a GOV.UK service 
 [2026-04-16] Muhammet Berkant Gezer - Reported a password enumeration vulnerability in a GOV.UK service 
 [2026-03-11] Jeewan Bhatta - Reported a a publicly exposed resource in a GOV.UK service
 [2026-02-20] Mridul Vohra (Spell1) - Reported a HTML injection vulnerability in a GOV.UK service
