@@ -3,8 +3,8 @@
 # Build security.txt app
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    DATE_NOW=$(date --rfc-3339='seconds')
-    DATE_EXP=$(date -d "+3 months" --rfc-3339='seconds')
+    DATE_NOW=$(date -u +"%Y-%m-%dT%H:%M:%Sz")
+    DATE_EXP=$(date -u -d "+3 months" +"%Y-%m-%dT%H:%M:%Sz")
 
     sed -i "s/DATE_NOW/${DATE_NOW}/g" ./security.txt
     sed -i "s/DATE_EXP/${DATE_EXP}/g" ./security.txt
