@@ -1,6 +1,7 @@
 # We would like to thank the following:
 # [yyyy-mm-dd] Name -- description
 
+[2026-09-30] Chris Nesbitt-Smith - Reported a XSS vulnerability in a GOV.UK service
 [2026-09-10] danish-researcher - Reported multiple Vulnerabilities in GOV.UK services
 [2026-07-22] Prasanth Sundararajan - Reported a XSS vulnerability in a GOV.UK service
 [2026-06-20] Smaran Chand - Reported a vulnerability in a GOV.UK service
